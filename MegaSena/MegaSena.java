@@ -6,32 +6,40 @@ import javax.swing.JOptionPane;
 
 public class MegaSena {
     public static void main(String[] args) {
-        int numero, i, j;
-        int[] mega = new int[10];
-        Random r = new Random();
-        for (i = 0; i < mega.length; i++) {
-            numero = r.nextInt(60) + 1;
+        int quantiApostas, numeroAposta;
 
-            for (j = 0; j < mega.length; j++) {
-                if (numero == mega[j] && j != i) {
-                    numero = r.nextInt(60) + i;
-                } else {
-                    mega[i] = numero;
-                }
+        quantiApostas = Integer
+                .parseInt(JOptionPane.showInputDialog("Digite a quantidade de apostas que você deseja fazer:"));
+
+        numeroAposta = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade de numeros por aposta:"));
+
+        gerarApostas(quantiApostas, numeroAposta);
+    }
+
+    private static void gerarApostas(int quantiApostas, int numeroAposta) {
+        Random random = new Random();
+        for (int i = 1; i <= quantiApostas; i++) {
+            int[] aposta = new int[numeroAposta];
+
+            for (int j = 0; j < numeroAposta; j++) {
+                int numero;
+                do {
+                    numero = random.nextInt(60) + 1;
+                } while (contem(aposta, numero));
+                aposta[j] = numero;
             }
+            Arrays.sort(aposta);
+            JOptionPane.showMessageDialog(null, "Aposta " + i + " : " + Arrays.toString(aposta));
         }
 
-        for (i = 0; i < mega.length; i++) {
-            for (j = i + 1; j < mega.length; j++) {
-                if (mega[i] > mega[j]) {
-                    numero = mega[i];
-                    mega[i] = mega[j];
-                    mega[j] = numero;
-                }
+    }
+
+    private static boolean contem(int[] array, int numero) {
+        for (int elemento : array) {
+            if (elemento == numero) {
+                return true;
             }
         }
-
-        JOptionPane.showMessageDialog(null, Arrays.toString(mega), "Seus numeros são:",
-                JOptionPane.INFORMATION_MESSAGE);
+        return false;
     }
 }
