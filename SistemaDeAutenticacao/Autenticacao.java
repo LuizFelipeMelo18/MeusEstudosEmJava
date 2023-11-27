@@ -8,7 +8,6 @@ import javax.swing.UIManager;
 public class Autenticacao {
     private static final int MAX_TENTATIVAS = 3;
     private static final Map<String, String> credenciais = new HashMap<>();
-    private static final Map<String, Integer> tentativasErradas = new HashMap<>();
 
     public static void main(String[] args) {
         UIManager.put("OptionPane.cancelButtonText", "Cancelar");
